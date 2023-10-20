@@ -6,7 +6,7 @@
 
 #include "calc.h"
 
-void calc_prog_1(char *host, dupla_int * params, int *result, int operacion) {
+void calc_prog_1(char *host, dupla_int *params, int *result, int operacion) {
   CLIENT *clnt;
 
 #ifndef DEBUG
@@ -19,16 +19,16 @@ void calc_prog_1(char *host, dupla_int * params, int *result, int operacion) {
 
   switch (operacion) {
   case 1:
-    result = suma_1(params, clnt);
+    *result = *suma_1(params, clnt);
     break;
   case 2:
-    result = resta_1(params, clnt);
+    *result = *resta_1(params, clnt);
     break;
   case 3:
-    result = multiplicacion_1(params, clnt);
+    *result = *multiplicacion_1(params, clnt);
     break;
   case 4:
-    result = division_1(params, clnt);
+    *result = *division_1(params, clnt);
     break;
   default:
     printf("Operacion no soportada\n");
