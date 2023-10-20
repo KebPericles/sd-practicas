@@ -11,9 +11,8 @@ suma_1_svc(dupla_int *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
+	result = argp->x + argp->y;
+	printf("Suma: %d + %d = %d\n", argp->x, argp->y, result);
 
 	return &result;
 }
@@ -23,9 +22,8 @@ resta_1_svc(dupla_int *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
+	result = argp->x - argp->y;
+	printf("Resta: %d - %d = %d\n", argp->x, argp->y, result);
 
 	return &result;
 }
@@ -35,9 +33,8 @@ multiplicacion_1_svc(dupla_int *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
+	result = argp->x * argp->y;
+	printf("Multiplicacion: %d * %d = %d\n", argp->x, argp->y, result);
 
 	return &result;
 }
@@ -47,9 +44,8 @@ division_1_svc(dupla_int *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
+	result = argp->x / argp->y;
+	printf("Division: %d / %d = %d\n", argp->x, argp->y, result);
 
 	return &result;
 }

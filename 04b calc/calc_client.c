@@ -6,60 +6,79 @@
 
 #include "calc.h"
 
+void calc_prog_1(char *host, dupla_int params, int *result, int operacion) {
+  CLIENT *clnt;
 
-void
-calc_prog_1(char *host)
-{
-	CLIENT *clnt;
-	int  *result_1;
-	dupla_int  suma_1_arg;
-	int  *result_2;
-	dupla_int  resta_1_arg;
-	int  *result_3;
-	dupla_int  multiplicacion_1_arg;
-	int  *result_4;
-	dupla_int  division_1_arg;
+#ifndef DEBUG
+  clnt = clnt_create(host, CALC_PROG, CALC_VERS, "udp");
+  if (clnt == NULL) {
+    clnt_pcreateerror(host);
+    exit(1);
+  }
+#endif /* DEBUG */
 
-#ifndef	DEBUG
-	clnt = clnt_create (host, CALC_PROG, CALC_VERS, "udp");
-	if (clnt == NULL) {
-		clnt_pcreateerror (host);
-		exit (1);
-	}
-#endif	/* DEBUG */
+  switch (operacion) {
+  case 1:
+    result = suma_1(params, clnt);
+    break;
+  case 2:
+    result = resta_1(params, clnt);
+    break;
+  case 3:
+    result = multiplicacion_1(params, clnt);
+    break;
+  case 4:
+    result = division_1(params, clnt);
+    break;
+  default:
+    printf("Operacion no soportada\n");
+    break;
+  }
 
-	result_1 = suma_1(&suma_1_arg, clnt);
-	if (result_1 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	result_2 = resta_1(&resta_1_arg, clnt);
-	if (result_2 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	result_3 = multiplicacion_1(&multiplicacion_1_arg, clnt);
-	if (result_3 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	result_4 = division_1(&division_1_arg, clnt);
-	if (result_4 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-#ifndef	DEBUG
-	clnt_destroy (clnt);
-#endif	 /* DEBUG */
+#ifndef DEBUG
+  clnt_destroy(clnt);
+#endif /* DEBUG */
 }
 
+int menuCalculadora() {
+  int operacion;
+  printf("1. Suma\n");
+  printf("2. Resta\n");
+  printf("3. Multiplicacion\n");
+  printf("4. Division\n");
+  printf("5. Salir\n");
+  printf("Operacion: ");
+  scanf("%d", &operacion);
+  return operacion;
+}
 
-int
-main (int argc, char *argv[])
-{
-	char *host;
+int main(int argc, char *argv[]) {
+  char *host;
 
-	if (argc < 2) {
-		printf ("usage: %s server_host\n", argv[0]);
-		exit (1);
-	}
-	host = argv[1];
-	calc_prog_1 (host);
-exit (0);
+  if (argc < 2) {
+    printf("usage: %s server_host\n", argv[0]);
+    exit(1);
+  }
+  host = argv[1];
+
+  int result;
+  int operacion;
+  dupla_int params;
+
+  // Menu inicial
+  operacion = menuCalculadora();
+
+  while (operacion != 5) {
+
+    // Parametros
+    printf("Primer numero: ");
+    scanf("%d", &params.x);
+    printf("Segundo numero: ");
+    scanf("%d", &params.y);
+
+    calc_prog_1(host, params, &result, operacion);
+
+    operacion = menuCalculadora();
+  }
+  exit(0);
 }
