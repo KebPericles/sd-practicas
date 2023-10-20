@@ -77,6 +77,7 @@ int main(int argc, char *argv[]) {
     scanf("%d", &params.y);
 
     calc_prog_1(host, &params, &result, operacion);
+    printf("Resultado: %d\n", result);
 
     operacion = menuCalculadora();
   }
