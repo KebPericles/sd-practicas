@@ -6,7 +6,7 @@
 
 #include "calc.h"
 
-void calc_prog_1(char *host, dupla_int params, int *result, int operacion) {
+void calc_prog_1(char *host, dupla_int * params, int *result, int operacion) {
   CLIENT *clnt;
 
 #ifndef DEBUG
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
     printf("Segundo numero: ");
     scanf("%d", &params.y);
 
-    calc_prog_1(host, params, &result, operacion);
+    calc_prog_1(host, &params, &result, operacion);
 
     operacion = menuCalculadora();
   }
